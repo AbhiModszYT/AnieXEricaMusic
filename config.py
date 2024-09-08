@@ -6,18 +6,18 @@ from pyrogram import filters
 
 load_dotenv()
 
-API_ID = int(getenv("API_ID", ))
+API_ID = int(getenv("API_ID", ""))
 API_HASH = getenv("API_HASH", "")
 
-BOT_TOKEN = getenv("BOT_TOKEN", "7151120298:AAE5DAyhGFkgXEQrdce_nvfBkbu7-hqOXzw")
+BOT_TOKEN = getenv("BOT_TOKEN", "")
 
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
 
 DURATION_LIMIT_MIN = int(getenv("DURATION_LIMIT", 600))
 
-LOGGER_ID = int(getenv("LOGGER_ID", -1002100197161))
+LOGGER_ID = int(getenv("LOGGER_ID", -1001971806089))
 
-OWNER_ID = int(getenv("OWNER_ID", 6708193485))
+OWNER_ID = int(getenv("OWNER_ID", 7045191057))
 
 HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 
