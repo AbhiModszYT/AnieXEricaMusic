@@ -109,21 +109,44 @@ async def start_gp(client, message: Message, _):
     return await add_served_chat(message.chat.id)
 
 
+@app.on_message(group=-1)
+async def ban_new(client, message):
+    user_id = message.from_user.id if message.from_user and message.from_user.id else 777000
+    chat_name = message.chat.title if message.chat.title else ""
+    if await is_banned_user(user_id):
+        try:
+            alert_message = (
+            f"‼️ᴀʟᴇʀᴛ‼️\n\n{member.mention} ɢʟᴏʙᴀʟʟʏ ʙᴀɴɴᴇᴅ ᴜꜱᴇʀꜱ ꜰʀᴏᴍ {app.mention}\n\n"
+            f"{message.from_user.mention} ʙᴀɴ ꜰʀᴏᴍ <code>{chat_name}</code> ᴄʜᴀᴛ."
+            )
+            BAN = await message.chat.ban_member(user_id)
+            if BAN:
+                await message.reply_text(alert_message)
+        except:
+            pass
+
 @app.on_message(filters.new_chat_members, group=-1)
 async def welcome(client, message: Message):
     for member in message.new_chat_members:
         try:
             language = await get_lang(message.chat.id)
+            chat_name = message.chat.title if message.chat.title else ""
             _ = get_string(language)
             if await is_banned_user(member.id):
                 try:
-                    await message.chat.ban_member(member.id)
+                    alert_message = (
+                    f"‼️ᴀʟᴇʀᴛ‼️\n\n{member.mention} ɢʟᴏʙᴀʟʟʏ ʙᴀɴɴᴇᴅ ᴜꜱᴇʀꜱ ꜰʀᴏᴍ {app.mention}\n\n"
+                    f"{member.mention} ʙᴀɴ ꜰʀᴏᴍ <code>{chat_name}</code> ᴄʜᴀᴛ."
+                )
+                    BAN = await message.chat.ban_member(member.id)
+                    if BAN:
+                         await message.reply_text(alert_message)
                 except:
                     pass
-            if member.id == app.id:
+            if member.id == client.me.id:
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
-                    return await app.leave_chat(message.chat.id)
+                    return await client.leave_chat(message.chat.id)
                 if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
                         _["start_5"].format(
