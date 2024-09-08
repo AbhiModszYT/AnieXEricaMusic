@@ -1,5 +1,5 @@
 import asyncio
-
+from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
