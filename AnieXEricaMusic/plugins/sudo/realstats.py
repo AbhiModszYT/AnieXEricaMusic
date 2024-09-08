@@ -8,6 +8,7 @@ from pyrogram.errors import (
     UserAlreadyParticipant,
     UserNotParticipant,
 )
+from pyrogram.types import Message
 from AnieXEricaMusic import app
 from AnieXEricaMusic.misc import SUDOERS
 from AnieXEricaMusic.utils.database import (
