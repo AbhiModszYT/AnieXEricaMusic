@@ -9,20 +9,20 @@ from pyrogram.errors import (
     UserNotParticipant,
 )
 from pyrogram.types import Message
-from TeamSuperBan import app
-from TeamSuperBan.misc import SUDOERS
-from TeamSuperBan.utils.database import (
+from AnieXEricaMusic import app
+from AnieXEricaMusic.misc import SUDOERS
+from AnieXEricaMusic.utils.database import (
     get_active_chats,
     get_authuser_names,
     get_client,
     get_served_chats,
     get_served_users,
 )
-from TeamSuperBan.utils.decorators.language import language
-from TeamSuperBan.utils.formatters import alpha_to_int
+from AnieXEricaMusic.utils.decorators.language import language
+from AnieXEricaMusic.utils.formatters import alpha_to_int
 from config import adminlist
 from pyrogram.enums import ChatMemberStatus
-from TeamSuperBan.utils import get_readable_time
+from AnieXEricaMusic.utils import get_readable_time
 from datetime import datetime
 import os
 
