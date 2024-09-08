@@ -26,7 +26,8 @@ async def on_new_chat_members(client: Client, message: Message):
         title = message.chat.title
         username = f"@{message.chat.username}"
         chat_id = message.chat.id
-        am = f"✫ <b><u>ɴᴇᴡ ɢʀᴏᴜᴘ</u></b> :\n\nᴄʜᴀᴛ ɪᴅ : {chat_id}\nᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ : {username}\nᴄʜᴀᴛ ᴛɪᴛʟᴇ : {title}\n\nᴀᴅᴅᴇᴅ ʙʏ : {added_by}"
+        chat_members = await client.get_chat_members_count(chat_id)
+        am = f"✫ <b><u>ɴᴇᴡ ɢʀᴏᴜᴘ</u></b> :\n\nᴄʜᴀᴛ ɪᴅ : {chat_id}\nᴄʜᴀᴛ ᴜsᴇʀɴᴀᴍᴇ : {username}\nᴄʜᴀᴛ ᴛɪᴛʟᴇ : {title}\nᴛᴏᴛᴀʟ ᴄʜᴀᴛ ᴍᴇᴍʙᴇʀꜱ : {chat_members}\n\nᴀᴅᴅᴇᴅ ʙʏ : {added_by}"
         reply_markup = InlineKeyboardMarkup([
     [
         InlineKeyboardButton(
