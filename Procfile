@@ -1,2 +1,2 @@
 worker: bash start
-web: yarn start:production
+web: yarn start
