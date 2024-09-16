@@ -1,2 +1,1 @@
-worker: bash start
-web: yarn start
+web: bash start
