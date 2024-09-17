@@ -147,7 +147,7 @@ async def show_apps(client, callback_query):
 async def main_menu(client, callback_query):
     buttons = [
         [InlineKeyboardButton("Show Deployed Apps", callback_data="show_apps")],
-        [InlineKeyboardButton(_["S_B_4"], callback_data="help_callback")],
+        [InlineKeyboardButton("Hᴇʟᴘ & Cᴏᴍᴍᴀɴᴅs", callback_data="help_callback")],
     ]
     reply_markup = InlineKeyboardMarkup(buttons)
 
