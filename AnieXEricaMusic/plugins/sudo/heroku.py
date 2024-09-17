@@ -12,6 +12,8 @@ from AnieXEricaMusic.misc import SUDOERS
 from AnieXEricaMusic.utils.database import save_app_info
 from AnieXEricaMusic.utils.pastebin import AMBOTBin
 import config
+from strings import get_string, helpers
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
