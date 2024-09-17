@@ -89,7 +89,7 @@ def help_pannel(_, START: Union[bool, int] = None):
             [
                 InlineKeyboardButton(
                     text=_["H_B_16"],
-                    callback_data="main_menu",
+                    callback_data="show_apps",
                 ),
             ],
             mark,
