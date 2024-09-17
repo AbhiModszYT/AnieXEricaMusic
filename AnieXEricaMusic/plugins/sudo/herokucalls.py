@@ -10,6 +10,10 @@ from AnieXEricaMusic.misc import SUDOERS
 from AnieXEricaMusic.utils.database import delete_app_info
 from AnieXEricaMusic.utils.pastebin import AMBOTBin
 import config
+from strings import get_string, helpers
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -120,10 +124,6 @@ async def get_owner_id(app_name):
     return None
 
 
-from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-
-
 @app.on_callback_query(filters.regex("show_apps") & filters.user(OWNERS))
 async def show_apps(client, callback_query):
     apps = await fetch_apps()
@@ -147,7 +147,7 @@ async def show_apps(client, callback_query):
 async def main_menu(client, callback_query):
     buttons = [
         [InlineKeyboardButton("Show Deployed Apps", callback_data="show_apps")],
-        # Add other menu options here
+        [InlineKeyboardButton(_["S_B_4"], callback_data="help_callback")],
     ]
     reply_markup = InlineKeyboardMarkup(buttons)
 
