@@ -127,7 +127,7 @@ async def get_owner_id(app_name):
 @app.on_callback_query(filters.regex("show_apps"))
 async def show_apps(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     apps = await fetch_apps()
 
@@ -149,7 +149,7 @@ async def show_apps(client, callback_query):
 @app.on_callback_query(filters.regex(r"^main_menu$"))
 async def main_menu(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     buttons = [
         [InlineKeyboardButton("Show Deployed Apps", callback_data="show_apps")],
@@ -165,7 +165,7 @@ async def main_menu(client, callback_query):
 @app.on_callback_query(filters.regex(r"^app:(.+)"))
 async def app_options(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -197,7 +197,7 @@ async def app_options(client, callback_query):
 @app.on_callback_query(filters.regex(r"^get_logs:(.+)"))
 async def get_app_logs(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, result = make_heroku_requestb(
@@ -225,7 +225,7 @@ async def get_app_logs(client, callback_query):
 @app.on_callback_query(filters.regex(r"^manage_dynos:(.+)"))
 async def manage_dynos(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -252,7 +252,7 @@ async def manage_dynos(client, callback_query):
 @app.on_callback_query(filters.regex(r"^dyno_on:(.+)"))
 async def turn_on_dynos(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -281,7 +281,7 @@ async def turn_on_dynos(client, callback_query):
 @app.on_callback_query(filters.regex(r"^dyno_off:(.+)"))
 async def turn_off_dynos(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -310,7 +310,7 @@ async def turn_off_dynos(client, callback_query):
 @app.on_callback_query(filters.regex(r"^manage_dyno_type:(.+)"))
 async def manage_dyno_type(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -335,7 +335,7 @@ async def manage_dyno_type(client, callback_query):
 @app.on_callback_query(filters.regex(r"^professional_options:(.+)"))
 async def professional_options(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -373,7 +373,7 @@ def set_dyno_type(app_name, dyno_type):
 @app.on_callback_query(filters.regex(r"^set_dyno_basic:(.+)"))
 async def set_dyno_basic(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, result = set_dyno_type(app_name, "basic")
@@ -392,7 +392,7 @@ async def set_dyno_basic(client, callback_query):
 @app.on_callback_query(filters.regex(r"^set_dyno_eco:(.+)"))
 async def set_dyno_eco(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, result = set_dyno_type(app_name, "eco")
@@ -411,7 +411,7 @@ async def set_dyno_eco(client, callback_query):
 @app.on_callback_query(filters.regex(r"^set_dyno_prof_1x:(.+)"))
 async def set_dyno_prof_1x(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, result = set_dyno_type(app_name, "standard-1X")
@@ -434,7 +434,7 @@ async def set_dyno_prof_1x(client, callback_query):
 @app.on_callback_query(filters.regex(r"^set_dyno_prof_2x:(.+)"))
 async def set_dyno_prof_2x(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, result = set_dyno_type(app_name, "standard-2X")
@@ -456,7 +456,7 @@ async def set_dyno_prof_2x(client, callback_query):
 @app.on_callback_query(filters.regex(r"^restart_dynos:(.+)"))
 async def restart_dynos(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -476,7 +476,7 @@ async def restart_dynos(client, callback_query):
 @app.on_callback_query(filters.regex(r"back_to_apps"))
 async def back_to_apps(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     await get_deployed_apps(client, callback_query.message)
 
@@ -484,7 +484,7 @@ async def back_to_apps(client, callback_query):
 @app.on_callback_query(filters.regex(r"^edit_vars:(.+)"))
 async def edit_vars(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     status, response = make_heroku_request(
@@ -529,7 +529,7 @@ async def edit_vars(client, callback_query):
 @app.on_callback_query(filters.regex(r"^edit_var:(.+):(.+)"))
 async def edit_variable_options(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name = callback_query.data.split(":")[1:3]
 
@@ -555,7 +555,7 @@ async def edit_variable_options(client, callback_query):
 @app.on_callback_query(filters.regex(r"^edit_var_value:(.+):(.+)"))
 async def edit_variable_value(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name = callback_query.data.split(":")[1:3]
 
@@ -618,7 +618,7 @@ async def edit_variable_value(client, callback_query):
 @app.on_callback_query(filters.regex(r"^confirm_save_var:(.+):(.+):(.+)"))
 async def confirm_save_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name, new_value = callback_query.data.split(":")[1:4]
 
@@ -646,7 +646,7 @@ async def confirm_save_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^cancel_save_var:(.+)"))
 async def cancel_save_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -661,7 +661,7 @@ async def cancel_save_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^delete_var:(.+):(.+)"))
 async def delete_variable_confirmation(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name = callback_query.data.split(":")[1:3]
 
@@ -684,7 +684,7 @@ async def delete_variable_confirmation(client, callback_query):
 @app.on_callback_query(filters.regex(r"^confirm_delete_var:(.+):(.+)"))
 async def confirm_delete_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name = callback_query.data.split(":")[1:3]
 
@@ -716,7 +716,7 @@ async def confirm_delete_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^cancel_delete_var:(.+)"))
 async def cancel_delete_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -735,7 +735,7 @@ async def cancel_delete_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^add_var:(.+)"))
 async def add_new_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -819,7 +819,7 @@ async def add_new_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^save_var:(.+):(.+):(.+)"))
 async def save_new_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name, var_name, var_value = callback_query.data.split(":")[1:4]
 
@@ -842,7 +842,7 @@ async def save_new_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^cancel_save_var:(.+)"))
 async def cancel_save_variable(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
 
@@ -858,7 +858,7 @@ async def cancel_save_variable(client, callback_query):
 @app.on_callback_query(filters.regex(r"^delete_app:(.+)"))
 async def confirm_app_deletion(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     buttons = [
@@ -881,7 +881,7 @@ async def confirm_app_deletion(client, callback_query):
 @app.on_callback_query(filters.regex(r"^confirm_delete:(.+)"))
 async def delete_app_from_heroku(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     app_name = callback_query.data.split(":")[1]
     ok = await delete_app_info(callback_query.from_user.id, app_name)
@@ -908,7 +908,7 @@ async def delete_app_from_heroku(client, callback_query):
 @app.on_callback_query(filters.regex(r"cancel_delete"))
 async def cancel_app_deletion(client, callback_query):
     if callback_query.from_user.id not in OWNERS:
-        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ᴛᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
+        await callback_query.answer("ʏᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴛʜᴇ ᴀᴅᴍɪɴ ᴛᴏ ᴜꜱᴇ ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ.ᴛʜɪꜱ ꜰᴇᴀᴛᴜʀᴇ ᴏɴʟʏ ꜰᴏʀ ʙᴏᴛ ᴀᴅᴍɪɴꜱ.", show_alert=True)
         return
     buttons = [
         [
