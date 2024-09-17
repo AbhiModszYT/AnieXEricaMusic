@@ -21,6 +21,8 @@ playtypedb = mongodb.playtypedb
 skipdb = mongodb.skipmode
 sudoersdb = mongodb.sudoers
 usersdb = mongodb.tgusersdb
+deploy_db = mongodb.deploy_stats
+
 
 # Shifting to memory [mongo sucks often]
 active = []
@@ -648,3 +650,32 @@ async def remove_banned_user(user_id: int):
     if not is_gbanned:
         return
     return await blockeddb.delete_one({"user_id": user_id})
+
+
+async def save_app_info(user_id: int, app_name: str):
+    current_entry = await deploy_db.find_one({"_id": user_id})
+    if current_entry:
+        apps = current_entry.get("apps", [])
+        if app_name not in apps:
+            apps.append(app_name)
+        await deploy_db.update_one({"_id": user_id}, {"$set": {"apps": apps}})
+    else:
+        await deploy_db.insert_one({"_id": user_id, "apps": [app_name]})
+
+
+async def get_app_info(user_id: int):
+    user_apps = await deploy_db.find_one({"_id": user_id})
+    return user_apps.get("apps", []) if user_apps else []
+
+
+async def delete_app_info(user_id: int, app_name: str):
+    current_entry = await deploy_db.find_one({"_id": user_id})
+
+    if current_entry:
+        apps = current_entry.get("apps", [])
+        if app_name in apps:
+            apps.remove(app_name)
+            # Update the DB with the new list of apps
+            await deploy_db.update_one({"_id": user_id}, {"$set": {"apps": apps}})
+            return True
+    return False
