@@ -108,6 +108,7 @@ pprint "\nLOG GROUP ID: "; color_reset; read logger
 pprint "\nSTRING SESSION: "; color_reset; read string_session
 pprint "\nSUPPORT CHANNEL: "; color_reset; read support_channel
 pprint "\nSUPPORT CHAT: "; color_reset; read support_chat
+pprint "\nHEROKU API KEY: "; color_reset; read heroku_api
 
 pprint "\n\nProcessing your vars, wait a while !" "cgreen"
 
@@ -123,6 +124,7 @@ LOGGER_ID = $logger
 STRING_SESSION = $string_session
 SUPPORT_CHANNEL = $support_channel
 SUPPORT_CHAT = $support_chat
+HEROKU_API_KEY = $heroku_api
 OWNER_ID = $ownid""" > .env
 clear
 
