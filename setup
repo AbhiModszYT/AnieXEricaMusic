@@ -109,6 +109,7 @@ pprint "\nSTRING SESSION: "; color_reset; read string_session
 pprint "\nSUPPORT CHANNEL: "; color_reset; read support_channel
 pprint "\nSUPPORT CHAT: "; color_reset; read support_chat
 pprint "\nHEROKU API KEY: "; color_reset; read heroku_api
+pprint "\nOWNERS: "; color_reset; read owners
 
 pprint "\n\nProcessing your vars, wait a while !" "cgreen"
 
@@ -125,6 +126,7 @@ STRING_SESSION = $string_session
 SUPPORT_CHANNEL = $support_channel
 SUPPORT_CHAT = $support_chat
 HEROKU_API_KEY = $heroku_api
+OWNERS = $owners
 OWNER_ID = $ownid""" > .env
 clear
 
