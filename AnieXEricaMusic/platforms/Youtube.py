@@ -12,8 +12,6 @@ from youtubesearchpython.__future__ import VideosSearch
 
 from AnieXEricaMusic.utils.formatters import time_to_seconds
 
-email = "Ambotabhi987@gmail.com"
-password = "srxbgunhxoypqodl"
 
 class DownloadError(Exception):
     """Custom exception for download failures."""
@@ -306,8 +304,6 @@ class YouTubeAPI:
         songvideo: Union[bool, str] = None,
         format_id: Union[bool, str] = None,
         title: Union[bool, str] = None,
-        email: str = None,
-        password: str = None,
     ) -> str:
         if videoid:
             vidid = link
@@ -326,12 +322,8 @@ class YouTubeAPI:
                 "nocheckcertificate": True,
                 "quiet": True,
                 "no_warnings": True,
+                "cookiefile": cookies(),
             }
-            if email and password:
-            ydl_opts["username"] = email
-            ydl_opts["password"] = password
-        else:
-            ydl_opts["cookiefile"] = cookies()
             x = yt_dlp.YoutubeDL(ydl_optssx)
             info = x.extract_info(link, False)
             xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
@@ -348,12 +340,8 @@ class YouTubeAPI:
                 "nocheckcertificate": True,
                 "quiet": True,
                 "no_warnings": True,
+                "cookiefile": cookies(),
             }
-            if email and password:
-            ydl_opts["username"] = email
-            ydl_opts["password"] = password
-        else:
-            ydl_opts["cookiefile"] = cookies()
             x = yt_dlp.YoutubeDL(ydl_optssx)
             info = x.extract_info(link, False)
             xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
@@ -374,12 +362,8 @@ class YouTubeAPI:
                 "no_warnings": True,
                 "prefer_ffmpeg": True,
                 "merge_output_format": "mp4",
+                "cookiefile": cookies(),
             }
-            if email and password:
-            ydl_opts["username"] = email
-            ydl_opts["password"] = password
-        else:
-            ydl_opts["cookiefile"] = cookies()
             x = yt_dlp.YoutubeDL(ydl_optssx)
             x.download([link])
 
@@ -400,21 +384,21 @@ class YouTubeAPI:
                         "preferredquality": "192",
                     }
                 ],
+                "cookiefile": cookies(),
             }
-            if email and password:
-            ydl_opts["username"] = email
-            ydl_opts["password"] = password
-        else:
-            ydl_opts["cookiefile"] = cookies()
             x = yt_dlp.YoutubeDL(ydl_optssx)
             x.download([link])
 
         if songvideo:
+            # await loop.run_in_executor(None, song_video_dl)
+            # fpath = f"downloads/{title}.mp4"
             fpath = await loop.run_in_executor(
                 None, lambda: asyncio.run(api_download(vidid, video=True))
             )
             return fpath
         elif songaudio:
+            # await loop.run_in_executor(None, song_audio_dl)
+            # fpath = f"downloads/{title}.mp3"
             fpath = await loop.run_in_executor(
                 None, lambda: asyncio.run(api_download(vidid))
             )
@@ -424,10 +408,29 @@ class YouTubeAPI:
             downloaded_file = await loop.run_in_executor(
                 None, lambda: asyncio.run(api_download(vidid, video=True))
             )
+            """if await is_on_off(config.YTDOWNLOADER):
+                direct = True
+                downloaded_file = await loop.run_in_executor(None, video_dl)
+            else:
+                proc = await asyncio.create_subprocess_exec(
+                    "yt-dlp",
+                    "-g",
+                    "-f",
+                    "best[height<=?720][width<=?1280]",
+                    f"{link}",
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE,
+                )
+                stdout, stderr = await proc.communicate()
+                if stdout:
+                    downloaded_file = stdout.decode().split("\n")[0]
+                    direct = None
+                else:
+                    return"""
         else:
             direct = True
+            # downloaded_file = await loop.run_in_executor(None, audio_dl)
             downloaded_file = await loop.run_in_executor(
                 None, lambda: asyncio.run(api_download(vidid))
             )
         return downloaded_file, direct
-
