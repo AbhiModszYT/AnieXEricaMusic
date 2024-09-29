@@ -17,7 +17,6 @@ async def banall(client: Client, message: Message):
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
-    
     if user_id != owner_id and user_id not in SUDOERS:
         await message.reply_text(f"Hey {message.from_user.mention}, 'banall' can only be executed by the group owner.")
         return
