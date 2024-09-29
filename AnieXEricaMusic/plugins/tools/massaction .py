@@ -91,7 +91,7 @@ async def handle_unbanall_callback(client: Client, callback_query: CallbackQuery
         if not bot.privileges.can_restrict_members:
             await callback_query.message.edit("I don't have permission to unban members in this group.")
             return
-        async for member in app.get_chat_members(chat_id, filter="banned"):
+        async for member in app.get_chat_members(chat_id, filter=enums.ChatMembersFilter.BANNED):
             banned_users.append(member.user.id)
             try:
                 await app.unban_chat_member(chat_id, banned_users[-1])
