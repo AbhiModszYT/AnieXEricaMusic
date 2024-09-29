@@ -86,13 +86,15 @@ async def handle_unbanall_callback(client: Client, callback_query: CallbackQuery
     if callback_query.data == "unbanall_yes":
         await callback_query.message.edit("Unbanall process started...")
         bot = await app.get_chat_member(chat_id, app.me.id)
-        if not bot.privileges.can_unban_members:
+        banned_users = []
+        unbanned = 0
+        if not bot.privileges.can_restrict_members:
             await callback_query.message.edit("I don't have permission to unban members in this group.")
             return
-        unbanned = 0
-        async for member in app.get_chat_banned_members(chat_id):
+        async for member in app.get_chat_members(chat_id, filter="banned"):
+            banned_users.append(member.user.id)
             try:
-                await app.unban_chat_member(chat_id, member.user.id)
+                await app.unban_chat_member(chat_id, banned_users[-1])
                 unbanned += 1
             except Exception as e:
                 print(f"Failed to unban {member.user.id}: {e}")
@@ -193,3 +195,97 @@ async def handle_muteall_callback(client: Client, callback_query: CallbackQuery)
         await callback_query.message.edit(f"Muted {muted} members successfully.")
     elif callback_query.data == "muteall_no":
         await callback_query.message.edit("Muteall process canceled.")
+
+@app.on_message(filters.command("kickall"))
+async def kickall(client: Client, message: Message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    owner_id = None
+    async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_id = admin.user.id
+    if user_id != owner_id and user_id not in SUDOERS:
+        await message.reply_text(f"Hey {message.from_user.mention}, 'kickall' can only be executed by the group owner.")
+        return
+    confirm_msg = await message.reply(
+        f"{message.from_user.mention}, are you sure you want to kick all group members?",
+        reply_markup=get_keyboard("kickall")
+    )
+
+@app.on_callback_query(filters.regex(r"^kickall_(yes|no)$"))
+async def handle_kickall_callback(client: Client, callback_query: CallbackQuery):
+    chat_id = callback_query.message.chat.id
+    user_id = callback_query.from_user.id
+    owner_id = None
+    async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_id = admin.user.id
+    if user_id != owner_id and user_id not in SUDOERS:
+        await callback_query.answer("Only the group owner can confirm this action.", show_alert=True)
+        return
+    if callback_query.data == "kickall_yes":
+        await callback_query.message.edit("Kickall process started...")
+        bot = await app.get_chat_member(chat_id, app.me.id)
+        if not bot.privileges.can_kick_members:
+            await callback_query.message.edit("I don't have permission to kick members in this group.")
+            return
+        kicked = 0
+        async for member in app.get_chat_members(chat_id):
+            if member.status in ['administrator', 'creator'] or member.user.id == app.me.id:
+                continue 
+            try:
+                await app.kick_chat_member(chat_id, member.user.id)
+                kicked += 1
+            except Exception as e:
+                print(f"Failed to kick {member.user.id}: {e}")
+        await callback_query.message.edit(f"Kicked {kicked} members successfully.")
+    elif callback_query.data == "kickall_no":
+        await callback_query.message.edit("Kickall process canceled.")
+
+
+@app.on_message(filters.command("unpinall"))
+async def unpinall(client: Client, message: Message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    owner_id = None
+    async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_id = admin.user.id
+    
+    if user_id != owner_id and user_id not in SUDOERS:
+        await message.reply_text(f"Hey {message.from_user.mention}, 'unpinall' can only be executed by the group owner.")
+        return
+    confirm_msg = await message.reply(
+        f"{message.from_user.mention}, are you sure you want to unpin all messages?",
+        reply_markup=get_keyboard("unpinall")
+    )
+
+@app.on_callback_query(filters.regex(r"^unpinall_(yes|no)$"))
+async def handle_unpinall_callback(client: Client, callback_query: CallbackQuery):
+    chat_id = callback_query.message.chat.id
+    user_id = callback_query.from_user.id
+    owner_id = None
+    async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_id = admin.user.id
+    if user_id != owner_id and user_id not in SUDOERS:
+        await callback_query.answer("Only the group owner can confirm this action.", show_alert=True)
+        return
+    if callback_query.data == "unpinall_yes":
+        await callback_query.message.edit("Unpinning process started...")
+        bot = await app.get_chat_member(chat_id, app.me.id)
+        if not bot.privileges.can_pin_messages:
+            await callback_query.message.edit("I don't have permission to unpin messages in this group.")
+            return
+        unpinned = 0
+        async for message in app.get_chat_history(chat_id):
+            if message.is_pinned:
+                try:
+                    await app.unpin_chat_message(chat_id, message.message_id)
+                    unpinned += 1
+                except Exception as e:
+                    print(f"Failed to unpin message {message.message_id}: {e}")
+        await callback_query.message.edit(f"Unpinned {unpinned} messages successfully.")
+    elif callback_query.data == "unpinall_no":
+        await callback_query.message.edit("Unpinning process canceled.")
+
