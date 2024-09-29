@@ -226,7 +226,7 @@ async def handle_kickall_callback(client: Client, callback_query: CallbackQuery)
     if callback_query.data == "kickall_yes":
         await callback_query.message.edit("Kickall process started...")
         bot = await app.get_chat_member(chat_id, app.me.id)
-        if not bot.privileges.can_kick_members:
+        if not bot.privileges.can_restrict_members:
             await callback_query.message.edit("I don't have permission to kick members in this group.")
             return
         kicked = 0
