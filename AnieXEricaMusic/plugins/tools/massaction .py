@@ -6,7 +6,9 @@ from AnieXEricaMusic import app
 @app.on_message(filters.command("banall"))
 async def banall(client: Client, message: Message):
     chat_id = message.chat.id
-    admins = await app.get_chat_members(chat_id, filter="administrators")
+    admins = []
+    async for admin in app.get_chat_members(chat_id, filter="administrators"):
+        admins.append(admin)
     group_owner = None
     for admin in admins:
         if admin.status == "creator":
@@ -21,6 +23,7 @@ async def banall(client: Client, message: Message):
     if check not in ['y', 'yes']:
         await AMBOT.edit(f"{message.from_user.mention}, banall canceled.")
         return
+    
     await AMBOT.edit(f"Banall started by {message.from_user.mention}...")  
     bot = await app.get_chat_member(chat_id, app.me.id)
     bot_permission = bot.privileges.can_restrict_members
