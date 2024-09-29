@@ -277,14 +277,18 @@ async def handle_unpinall_callback(client: Client, callback_query: CallbackQuery
         if not bot.privileges.can_pin_messages:
             await callback_query.message.edit("I don't have permission to unpin messages in this group.")
             return
-        unpinned = 0
-        async for message in app.get_chat_history(chat_id):
-                try:
-                    await app.unpin_chat_message(chat_id, message.message_id)
-                    unpinned += 1
-                except Exception as e:
-                    print(f"Failed to unpin message {message.message_id}: {e}")
-        await callback_query.message.edit(f"Unpinned {unpinned} messages successfully.")
+        try:
+            chat = await app.get_chat(chat_id)
+            pinned_message = chat.pinned_message
+            unpinned = 0
+            if pinned_message:
+                await app.unpin_chat_message(chat_id, pinned_message.message_id)
+                unpinned += 1
+                await callback_query.message.edit(f"Unpinned {unpinned} message successfully.")
+            else:
+                await callback_query.message.edit("There are no messages to unpin.")
+        except Exception as e:
+            print(f"Failed to unpin message: {e}")
+            await callback_query.message.edit("An error occurred while trying to unpin the message.")
     elif callback_query.data == "unpinall_no":
         await callback_query.message.edit("Unpinning process canceled.")
-
