@@ -3,24 +3,11 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 from AnieXEricaMusic import app
 from AnieXEricaMusic.misc import SUDOERS
 
-banall = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Yes", callback_data="banall_yes"),
-     InlineKeyboardButton("No", callback_data="banall_no")]
-])
-unbanall = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Yes", callback_data="unbanall_yes"),
-     InlineKeyboardButton("No", callback_data="unbanall_no")]
-])
-
-unmuteall = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Yes", callback_data="unmuteall_yes"),
-     InlineKeyboardButton("No", callback_data="unmuteall_no")]
-])
-
-muteall = InlineKeyboardMarkup([
-    [InlineKeyboardButton("Yes", callback_data="muteall_yes"),
-     InlineKeyboardButton("No", callback_data="muteall_no")]
-])
+def get_keyboard(command):
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("Yes", callback_data=f"{command}_yes"),
+         InlineKeyboardButton("No", callback_data=f"{command}_no")]
+    ])
 
 @app.on_message(filters.command("banall"))
 async def banall(client: Client, message: Message):
@@ -36,7 +23,7 @@ async def banall(client: Client, message: Message):
         return
     confirm_msg = await message.reply(
         f"{message.from_user.mention}, are you sure you want to ban all group members?",
-        reply_markup=banall
+        reply_markup=get_keyboard("banall")
     )
 @app.on_callback_query(filters.regex(r"^banall_(yes|no)$"))
 async def handle_callback(client: Client, callback_query: CallbackQuery):
@@ -82,7 +69,7 @@ async def unbanall(client: Client, message: Message):
         return
     confirm_msg = await message.reply(
         f"{message.from_user.mention}, are you sure you want to unban all group members?",
-        reply_markup=unbanall
+        reply_markup=get_keyboard("unbanall")
     )
 
 @app.on_callback_query(filters.regex(r"^unbanall_(yes|no)$"))
@@ -128,7 +115,7 @@ async def unmuteall(client: Client, message: Message):
     
     confirm_msg = await message.reply(
         f"{message.from_user.mention}, are you sure you want to unmute all group members?",
-        reply_markup=unmuteall
+        reply_markup=get_keyboard("unmuteall")
     )
 
 @app.on_callback_query(filters.regex(r"^unmuteall_(yes|no)$"))
@@ -175,7 +162,7 @@ async def muteall(client: Client, message: Message):
         return
     confirm_msg = await message.reply(
         f"{message.from_user.mention}, are you sure you want to mute all group members?",
-        reply_markup=muteall
+        reply_markup=get_keyboard("muteall")
     )
 @app.on_callback_query(filters.regex(r"^muteall_(yes|no)$"))
 async def handle_muteall_callback(client: Client, callback_query: CallbackQuery):
