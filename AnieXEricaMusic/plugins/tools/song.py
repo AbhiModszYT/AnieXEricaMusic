@@ -48,7 +48,7 @@ ydl_opts = {
     'keepvideo': True,
     'prefer_ffmpeg': False,
     'geo_bypass': True,
-    'cookiefile': cookies(),
+    'cookies': 'AnieXEricaMusic/cookies/cookies.txt',
     'outtmpl': '%(title)s.%(ext)s',
     'quite': True
 }
@@ -70,22 +70,22 @@ async def asong(client: Client, message: Message):
         duration = results[0]["duration"]
 
     except Exception as e:
-        m.edit("❌ song not found.\n\nplease give a valid song name.")
+        await m.edit("❌ song not found.\n\nplease give a valid song name.")
         print(str(e))
         return
-    m.edit("📥 downloading file...")
+    await m.edit("📥 downloading file...")
     try:
         with yt_dlp.YoutubeDL(ydl_ops) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
-        rep = f"🎵 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 :- ✨ @royalkifeelings ❤"
+        rep = f"🎵 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐝 𝐁𝐲 :- ✨ {app.mention} ❤"
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        m.edit("📤 uploading file...")
-        message.reply_audio(
+        await m.edit("📤 uploading file...")
+        await message.reply_audio(
             audio_file,
             caption=rep,
             thumb=thumb_name,
@@ -93,9 +93,9 @@ async def asong(client: Client, message: Message):
             title=title,
             duration=dur,
         )
-        m.delete()
+        await m.delete()
     except Exception as e:
-        m.edit("❌ error, wait for bot owner to fix")
+        await m.edit("❌ error, wait for bot owner to fix")
         print(e)
 
     try:
@@ -246,7 +246,7 @@ async def vsong(client: Client, message: Message):
         "keepvideo": True,
         "prefer_ffmpeg": False,
         "geo_bypass": True,
-        "cookiefile": cookies(),
+        "cookies": "AnieXEricaMusic/cookies/cookies.txt",
         "outtmpl": "%(title)s.%(ext)s",
         "quite": True,
     }
