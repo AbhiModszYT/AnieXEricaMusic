@@ -57,7 +57,7 @@ ydl_opts = {
 @app.on_message(filters.command(["asong" , "audio","song"]))
 async def asong(client: Client, message: Message):
     query = " ".join(message.command[1:])
-    m = message.reply("🔎 finding song...")
+    m = await message.reply("🔎 finding song...")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
