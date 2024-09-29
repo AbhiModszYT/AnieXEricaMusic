@@ -279,7 +279,6 @@ async def handle_unpinall_callback(client: Client, callback_query: CallbackQuery
             return
         unpinned = 0
         async for message in app.get_chat_history(chat_id):
-            if message.is_pinned:
                 try:
                     await app.unpin_chat_message(chat_id, message.message_id)
                     unpinned += 1
