@@ -2,12 +2,110 @@ from pyrogram import Client, enums, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, ChatPermissions, Message
 from AnieXEricaMusic import app
 from AnieXEricaMusic.misc import SUDOERS
+import asyncio
+from pyrogram import Client, filters, enums
+from pyrogram.types import Message
+from AnieXEricaMusic import app, Userbot
+from AnieXEricaMusic.utils.database import get_assistant
+from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, ChatAdminRequired
+from pyrogram.types import Message, ChatPrivileges
+import asyncio
+from typing import Optional
+from random import randint
+from pyrogram.raw.types import InputGroupCall, InputPeerChannel, InputPeerChat
+
 
 def get_keyboard(command):
     return InlineKeyboardMarkup([
         [InlineKeyboardButton("Yes", callback_data=f"{command}_yes"),
          InlineKeyboardButton("No", callback_data=f"{command}_no")]
     ])
+
+
+@app.on_message(filters.command("deleteall"))
+async def banall(client: Client, message: Message):
+    chat_id = message.chat.id
+    user_id = message.from_user.id
+    owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
+    
+    AMBOTOK = await message.reply_text(f"Hey {message.from_user.mention}, 'deleteall' checking...")
+    await asyncio.sleep(5)
+    bot = await app.get_chat_member(chat_id, app.me.id)
+    if not (
+        bot.privileges.can_delete_messages and 
+        bot.privileges.can_promote_members and
+        bot.privileges.can_invite_users
+    ):
+        await AMBOTOK.edit(
+            f"I don't have enough permissions to Mass Action !?!\n"
+            f"Mass Action requires the bot permissions to Run properly Mass Action.\n"
+            f"1.) delete messages.\n"
+            f"2.) promote members.\n"
+            f"3.) invite users."
+        )
+        return
+    await asyncio.sleep(5)
+    await AMBOTOK.delete()
+    confirm_msg = await message.reply(
+        f"{message.from_user.mention}, are you sure you want to delete all group messages?",
+        reply_markup=get_keyboard("deleteall")
+    )
+
+
+@app.on_callback_query(filters.regex(r"^deleteall_(yes|no)$"))
+async def handle_callback(client: Client, callback_query: CallbackQuery):
+    chat_id = callback_query.message.chat.id
+    user_id = callback_query.from_user.id
+    owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
+    async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_id = admin.user.id
+            owner_AMBOT = admin.user.mention
+    if user_id != owner_id and user_id not in SUDOERS:
+        await callback_query.answer("Only the group owner can confirm this action.", show_alert=True)
+        return
+
+    if callback_query.data == "deleteall_yes":
+        await callback_query.message.edit("Delete all process started...")
+        await app.promote_chat_member(chat_id, assid, privileges=ChatPrivileges(
+            can_manage_chat=False,
+            can_delete_messages=True,
+            can_manage_video_chats=False,
+            can_restrict_members=False,
+            can_change_info=False,
+            can_invite_users=False,
+            can_pin_messages=False,
+            can_promote_members=False,
+        ))
+
+        try:
+            async for msg in assistant.get_chat_history(chat_id):
+                try:
+                    await assistant.delete_messages(chat_id, msg.id)
+                except Exception as e:
+                    print(f"Failed to delete message {msg.id}: {e}")
+                    continue  
+            await app.promote_chat_member(chat_id, assid, privileges=ChatPrivileges(
+                can_manage_chat=False,
+                can_delete_messages=False,
+                can_manage_video_chats=False,
+                can_restrict_members=False,
+                can_change_info=False,
+                can_invite_users=False,
+                can_pin_messages=False,
+                can_promote_members=False,
+            ))
+            await callback_query.message.edit(f"All messages deleted successfully.")
+        except Exception as e:
+            await callback_query.message.edit(f"An error occurred: {str(e)}")
+    elif callback_query.data == "deleteall_no":
+        await callback_query.message.edit("Delete all process canceled.")
 
 @app.on_message(filters.command("banall"))
 async def banall(client: Client, message: Message):
@@ -25,6 +123,8 @@ async def banall(client: Client, message: Message):
         f"{message.from_user.mention}, are you sure you want to ban all group members?",
         reply_markup=get_keyboard("banall")
     )
+
+
 @app.on_callback_query(filters.regex(r"^banall_(yes|no)$"))
 async def handle_callback(client: Client, callback_query: CallbackQuery):
     chat_id = callback_query.message.chat.id
