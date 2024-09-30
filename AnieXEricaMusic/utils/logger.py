@@ -4,7 +4,7 @@ from AnieXEricaMusic.utils.database import is_on_off
 from config import LOG_GROUP_ID
 
 
-async def LOG_GROUP_ID(message, streamtype):
+async def play_logs(message, streamtype):
     if await is_on_off(2):
         logger_text = f"""
 <b>{app.mention} ᴘʟᴀʏ ʟᴏɢ</b>
