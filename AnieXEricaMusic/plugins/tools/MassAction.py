@@ -72,7 +72,7 @@ async def handle_callback(client: Client, callback_query: CallbackQuery):
         return
 
     if callback_query.data == "deleteall_yes":
-        await callback_query.message.edit("Delete all process started...")
+        await callback_query.answer("Delete all process started...", show_alert=True)
         await app.promote_chat_member(chat_id, assid, privileges=ChatPrivileges(
             can_manage_chat=False,
             can_delete_messages=True,
@@ -101,9 +101,9 @@ async def handle_callback(client: Client, callback_query: CallbackQuery):
                 can_pin_messages=False,
                 can_promote_members=False,
             ))
-            await callback_query.message.edit(f"All messages deleted successfully.")
+            await callback_query.answer("All messages deleted successfully.", show_alert=False)
         except Exception as e:
-            await callback_query.message.edit(f"An error occurred: {str(e)}")
+            await callback_query.answer(f"An error occurred: {str(e)}", show_alert=False)
     elif callback_query.data == "deleteall_no":
         await callback_query.message.edit("Delete all process canceled.")
 
