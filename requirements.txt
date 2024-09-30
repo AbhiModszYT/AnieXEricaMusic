@@ -7,13 +7,14 @@ ffmpeg-python
 gitpython
 hachoir
 heroku3
-httpx[http2]
 motor
+numpy
+opencv-python
 pillow==9.5.0
 psutil
 py-tgcalls==0.9.7
 pykeyboard
-pyrogram==2.0.106
+https://github.com/KurimuzonAkuma/pyrogram/archive/v2.1.23.zip
 python-dotenv
 pyyaml
 requests
@@ -21,9 +22,9 @@ speedtest-cli
 spotipy
 tgcrypto
 unidecode
+uvloop
 yt-dlp
 youtube-search
 youtube-search-python
-telegraph
 pyromod
 wget

@@ -37,11 +37,6 @@
       "value": "7137269276",
       "required": true
     },
-    "OWNERS": {
-      "description": "Heroku Apps On Bots Users",
-      "value": "7137269276",
-      "required": true
-    },
    "SUPPORT_CHANNEL": {
       "description": "Add channel link",
       "value": "https://t.me/SuperBanSBots",
