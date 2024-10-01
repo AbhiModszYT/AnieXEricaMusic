@@ -26,8 +26,8 @@ async def play_logs(message, streamtype):
     if await is_on_off(2):
         chat_members = await app.get_chat_members_count(message.chat.id)
         async for admin in app.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
-        if admin.status == enums.ChatMemberStatus.OWNER:
-            owner_AMBOT = admin.user.mention
+            if admin.status == enums.ChatMemberStatus.OWNER:
+                owner_AMBOT = admin.user.mention
         logger_text = f"""
 <b>{app.mention} ᴘʟᴀʏ ʟᴏɢ</b>
 ╔════❰𝐏𝐋𝐀𝐘𝐈𝐍𝐆❱═══❍⊱❁۪۪
