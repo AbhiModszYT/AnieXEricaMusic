@@ -1,3 +1,18 @@
+from pyrogram import Client, enums, filters
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, ChatPermissions, Message
+from AnieXEricaMusic import app
+from AnieXEricaMusic.misc import SUDOERS
+import asyncio
+from pyrogram import Client, filters, enums
+from pyrogram.types import Message
+from AnieXEricaMusic import app, Userbot
+from AnieXEricaMusic.utils.database import get_assistant
+from pyrogram.errors import UserAlreadyParticipant, UserNotParticipant, ChatAdminRequired
+from pyrogram.types import Message, ChatPrivileges
+import asyncio
+from typing import Optional
+from random import randint
+from pyrogram.raw.types import InputGroupCall, InputPeerChannel, InputPeerChat
 from pyrogram.enums import ParseMode
 from AnieXEricaMusic import app
 from AnieXEricaMusic.utils.database import is_on_off
@@ -10,6 +25,9 @@ from pyrogram.types import Message, User, InlineKeyboardButton, InlineKeyboardMa
 async def play_logs(message, streamtype):
     if await is_on_off(2):
         chat_members = await app.get_chat_members_count(message.chat.id)
+        async for admin in app.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
+        if admin.status == enums.ChatMemberStatus.OWNER:
+            owner_AMBOT = admin.user.mention
         logger_text = f"""
 <b>{app.mention} ᴘʟᴀʏ ʟᴏɢ</b>
 ╔════❰𝐏𝐋𝐀𝐘𝐈𝐍𝐆❱═══❍⊱❁۪۪
@@ -20,6 +38,7 @@ async def play_logs(message, streamtype):
 <b>◈ 𝐈𝐝 ➪ </b> <code>{message.from_user.id}</code>
 <b>◈ 𝐂𝐡𝐚𝐭 𝐋𝐢𝐧𝐤 ➪ </b> @{message.chat.username}
 <b>◈ 𝐂𝗵𝗮𝘁 𝗠𝗲𝗺𝗯𝗲𝗿𝘀 ➪ </b> <code>{chat_members}</code>
+<b>◈ 𝐂𝗵𝗮𝘁 𝗢𝘄𝗻𝗲𝗿 ➪ </b> {owner_AMBOT}
 <b>◈ 𝐒𝐞𝐚𝐫𝐜𝐡𝐞𝐝 ➪ </b> <code>{message.text.split(None, 1)[1]}</code>
 <b>◈ 𝐁𝐲 ➪ </b> {streamtype}
 ╚═══❰ #𝐍𝐞𝐰𝐒𝐨𝐧𝐠 ❱══❍⊱❁۪۪"""
