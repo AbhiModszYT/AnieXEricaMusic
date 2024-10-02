@@ -27,8 +27,8 @@ async def play_logs(message, streamtype):
         chat_members = await app.get_chat_members_count(message.chat.id)
         async for admin in app.get_chat_members(message.chat.id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             if admin.status == enums.ChatMemberStatus.OWNER:
-                owner_AMBOT = admin.user.mention
-                owner_AMBOT_id = admin.user.id
+                owner_AMBOT = admin.user.mention if hasattr(admin.user, 'mention') and admin.user.mention else "Is_Hide / Deleted"
+                owner_AMBOT_id = admin.user.id if hasattr(admin.user, 'id') else "Is_Hide / Deleted"
         logger_text = f"""
 <b>{app.mention} ᴘʟᴀʏ ʟᴏɢ</b>
 ╔════❰𝐏𝐋𝐀𝐘𝐈𝐍𝐆❱═══❍⊱❁۪۪
