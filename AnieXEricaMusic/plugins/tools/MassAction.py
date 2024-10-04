@@ -247,13 +247,24 @@ async def handle_unmuteall_callback(client: Client, callback_query: CallbackQuer
             if member.status in ['administrator', 'creator']:
                 continue 
             try:
-                await app.restrict_chat_member(chat_id, member.user.id, ChatPermissions(can_send_messages=True))
+                await app.restrict_chat_member(
+                    chat_id, 
+                    member.user.id, 
+                    ChatPermissions(
+                        can_send_messages=True,
+                        can_send_media_messages=False,
+                        can_send_polls=False,
+                        can_send_other_messages=True, 
+                        can_add_web_page_previews=True
+                    )
+                )
                 unmuted += 1
             except Exception as e:
                 print(f"Failed to unmute {member.user.id}: {e}")
         await callback_query.message.edit(f"Unmuted {unmuted} members successfully.")
     elif callback_query.data == "unmuteall_no":
         await callback_query.message.edit("Unmuteall process canceled.")
+
 
 
 @app.on_message(filters.command("muteall"))
