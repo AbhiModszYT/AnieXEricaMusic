@@ -49,13 +49,14 @@ async def log_pro_broadcast_usage(user_id):
         broadcast_count = user_data.get('broadcast_count', 0)
         if current_time - last_broadcast >= timedelta(minutes=1):
         #if current_time - last_broadcast >= timedelta(days=1):
+            # Reset the count if a day has passed
             await protimes.update_one(
                 {"user_id": user_id},
                 {
                     "$set": {"broadcast_count": 1, "last_broadcast": current_time}
                 }
             )
-            return True 
+            return True  
         elif broadcast_count < 2:
             await protimes.update_one(
                 {"user_id": user_id},
@@ -73,7 +74,7 @@ async def log_pro_broadcast_usage(user_id):
             "broadcast_count": 1,
             "last_broadcast": current_time
         })
-        return True  
+        return True
         
 @app.on_message(filters.command("gcast"))
 async def broadcast(client: Client, message: Message):
@@ -86,7 +87,7 @@ async def broadcast(client: Client, message: Message):
         return await message.reply_text("A broadcast is already in progress. Please wait until it finishes.")
     can_broadcast = await log_pro_broadcast_usage(user.id)
     if not can_broadcast:
-        return await message.reply_text("You can only use /gcast 2 times in a 24-hour period.")
+        return await message.reply_text(f"{user.mention} can only use /gcast 2 times in a 24-hour period. Your daily broadcasts are finished. Try again tomorrow.")
     if "-wfchat" in message.text or "-wfuser" in message.text:
         if not message.reply_to_message or not (message.reply_to_message.photo or message.reply_to_message.text):
             return await message.reply_text("Please reply to a text or image message for broadcasting.")
@@ -133,7 +134,6 @@ async def broadcast(client: Client, message: Message):
                     continue
             await message.reply_text(f"Broadcast to users completed! Sent to {sent_users} users.")
         IS_BROADCASTING = False
-        await log_pro_broadcast_usage(user.id)
         return
     if len(message.command) < 2:
         return await message.reply_text("Please provide a message to broadcast or reply to a message.")
