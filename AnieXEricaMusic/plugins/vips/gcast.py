@@ -47,7 +47,8 @@ async def log_pro_broadcast_usage(user_id):
     if user_data:
         last_broadcast = user_data.get('last_broadcast', current_time)
         broadcast_count = user_data.get('broadcast_count', 0)
-        if current_time - last_broadcast >= timedelta(days=1):
+        if current_time - last_broadcast >= timedelta(minutes=1):
+        #if current_time - last_broadcast >= timedelta(days=1):
             await protimes.update_one(
                 {"user_id": user_id},
                 {
