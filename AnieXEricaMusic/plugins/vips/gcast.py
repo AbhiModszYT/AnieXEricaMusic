@@ -91,7 +91,7 @@ async def broadcast(client: Client, message: Message):
         hours, remainder = divmod(remaining_time.total_seconds(), 3600)
         minutes, seconds = divmod(remainder, 60)
         return await message.reply_text(
-            f"{user.mention}, you have already used the /gcast command.\n"
+            f"{user.mention}, you have already used the /gcast command.\n\n"
             f"It only works 1 times in a 5-hour period. Try again after {int(hours)} hours and {int(minutes)} minutes."
             )
     if not can_broadcast:
