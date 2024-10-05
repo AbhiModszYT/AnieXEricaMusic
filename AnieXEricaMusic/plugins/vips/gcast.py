@@ -172,7 +172,7 @@ async def addpro_handler(client: Client, message: Message):
     is_pro_user = await is_pro(user.id)
     if is_pro_user:
         ask_update = await message.reply_text(
-            f"{user.mention} is already a pro user. Do you want to update the expiration and add more days?",
+            f"{user.mention} is already a pro user. Do you want to update the expiration and add more 1 days?",
             reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton("Yes", callback_data=f"update_pro:{user.id}:{duration}")],
                 [InlineKeyboardButton("No", callback_data="cancel_update")]
@@ -182,6 +182,10 @@ async def addpro_handler(client: Client, message: Message):
     await add_pro_user(user.id, duration, message.from_user.id)
     return await message.reply_text(f"{user.mention} has been added to pro for {duration} days.")
 
+@app.on_callback_query(filters.regex("cancel_update") & SUDOERS)
+async def cancel_update_callback(client: Client, callback_query):
+    await callback_query.message.edit_text("Update action cancelled.")
+    
 @app.on_callback_query(filters.regex(r"update_pro:(\d+):(\d+)") & SUDOERS)
 async def update_pro_callback(client: Client, callback_query):
     user_id = int(callback_query.matches[0].group(1))
