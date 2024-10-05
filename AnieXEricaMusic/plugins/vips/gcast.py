@@ -18,15 +18,105 @@ from AnieXEricaMusic.utils.database import (
     get_served_chats,
     get_served_users,
 )
+from AnieXEricaMusic.utils.database import (
+    get_active_chats,
+    get_authuser_names,
+    get_client,
+    get_served_chats,
+    get_served_users,
+)
 from pyrogram.types import (
     CallbackQuery,
     InlineKeyboardButton,
     InlineKeyboardMarkup,
     Message,
 )
+from config import adminlist
+from pyrogram.enums import ChatMembersFilter
+from pyrogram.errors import FloodWait
+from AnieXEricaMusic.utils.decorators.language import language
+from AnieXEricaMusic.utils.formatters import alpha_to_int
+
 pros = mongodb.pro
 
+IS_BROADCASTING = False
 
+@app.on_message(filters.command("gcast"))
+async def broadcast(client: Client, message: Message):
+    global IS_BROADCASTING
+    user = message.from_user
+    is_pro_user = await is_pro(user.id)
+    if not is_pro_user:
+        return await message.reply_text(f"{user.mention}, you don't have pro access for paid broadcast.")
+    if IS_BROADCASTING:
+        return await message.reply_text("A broadcast is already in progress. Please wait until it finishes.")
+    if "-wfchat" in message.text or "-wfuser" in message.text:
+        if not message.reply_to_message or not (message.reply_to_message.photo or message.reply_to_message.text):
+            return await message.reply_text("Please reply to a text or image message for broadcasting.")
+        if message.reply_to_message.photo:
+            content_type = 'photo'
+            file_id = message.reply_to_message.photo.file_id
+        else:
+            content_type = 'text'
+            text_content = message.reply_to_message.text
+        caption = message.reply_to_message.caption
+        reply_markup = message.reply_to_message.reply_markup if hasattr(message.reply_to_message, 'reply_markup') else None
+        IS_BROADCASTING = True
+        await message.reply_text("Starting the broadcast...")
+        if "-wfchat" in message.text or "-wfuser" in message.text:
+            sent_chats = 0
+            chats = [int(chat["chat_id"]) for chat in await get_served_chats()]
+            for i in chats:
+                try:
+                    if content_type == 'photo':
+                        await app.send_photo(chat_id=i, photo=file_id, caption=caption, reply_markup=reply_markup)
+                    else:
+                        await app.send_message(chat_id=i, text=text_content, reply_markup=reply_markup)
+                    sent_chats += 1
+                    await asyncio.sleep(0.2)
+                except FloodWait as fw:
+                    await asyncio.sleep(fw.value)
+                except:
+                    continue
+            await message.reply_text(f"Broadcast to chats completed! Sent to {sent_chats} chats.")
+        if "-wfuser" in message.text:
+            sent_users = 0
+            users = [int(user["user_id"]) for user in await get_served_users()]
+            for i in users:
+                try:
+                    if content_type == 'photo':
+                        await app.send_photo(chat_id=i, photo=file_id, caption=caption, reply_markup=reply_markup)
+                    else:
+                        await app.send_message(chat_id=i, text=text_content, reply_markup=reply_markup)
+                    sent_users += 1
+                    await asyncio.sleep(0.2)
+                except FloodWait as fw:
+                    await asyncio.sleep(fw.value)
+                except:
+                    continue
+            await message.reply_text(f"Broadcast to users completed! Sent to {sent_users} users.")
+        IS_BROADCASTING = False
+        return
+    if len(message.command) < 2:
+        return await message.reply_text("Please provide a message to broadcast or reply to a message.")
+    broadcast_message = message.text.split(None, 1)[1]
+    IS_BROADCASTING = True
+    await message.reply_text("Starting the text broadcast...")
+    sent_chats = 0
+    chats = [int(chat["chat_id"]) for chat in await get_served_chats()]
+    for chat_id in chats:
+        try:
+            await app.send_message(chat_id, broadcast_message)
+            sent_chats += 1
+            await asyncio.sleep(0.2)
+        except FloodWait as fw:
+            await asyncio.sleep(fw.value)
+        except:
+            continue
+    await message.reply_text(f"Text broadcast completed! Sent to {sent_chats} chats.")
+    IS_BROADCASTING = False
+    
+    
 async def add_pro_user(user_id: int, duration: int, added_by: int):
     expiration_date = datetime.now() + timedelta(days=duration)
     added_time = datetime.now()
