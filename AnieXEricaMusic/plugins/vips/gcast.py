@@ -271,7 +271,7 @@ async def rmpro_handler(client: Client, message: Message):
     await remove_pro_user(user.id)
     return await message.reply_text(f"{user.mention} has been removed from pro status.")
 
-@app.on_message(filters.command("prolists") & filters.user(OWNER_ID))
+@app.on_message(filters.command("prolists"))
 async def prolists_handler(client: Client, message: Message):
     pro_users = await pros.find().to_list(length=None)  
     if not pro_users:
