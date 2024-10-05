@@ -36,7 +36,7 @@ from pyrogram.enums import ChatMembersFilter
 from pyrogram.errors import FloodWait
 from AnieXEricaMusic.utils.decorators.language import language
 from AnieXEricaMusic.utils.formatters import alpha_to_int
-
+from config import OWNER_ID
 pros = mongodb.pro
 protimes = mongodb.protime
 IS_BROADCASTING = False
@@ -197,7 +197,7 @@ async def extract_user(message: Message) -> Optional[Message]:
         return None
 
 
-@app.on_message(filters.command("addpro") & SUDOERS)
+@app.on_message(filters.command("addpro") & filters.user(OWNER_ID))
 async def addpro_handler(client: Client, message: Message):
     if not message.reply_to_message and len(message.command) < 2:
         return await message.reply_text("Provide a user ID or reply to a message to add a user as pro.")
@@ -228,11 +228,11 @@ async def addpro_handler(client: Client, message: Message):
     await add_pro_user(user.id, duration, message.from_user.id)
     return await message.reply_text(f"{user.mention} has been added to pro for {duration} days.")
 
-@app.on_callback_query(filters.regex("cancel_update") & SUDOERS)
+@app.on_callback_query(filters.regex("cancel_update") & filters.user(OWNER_ID))
 async def cancel_update_callback(client: Client, callback_query):
     await callback_query.message.edit_text("Update action cancelled.")
     
-@app.on_callback_query(filters.regex(r"update_pro:(\d+):(\d+)") & SUDOERS)
+@app.on_callback_query(filters.regex(r"update_pro:(\d+):(\d+)") & filters.user(OWNER_ID))
 async def update_pro_callback(client: Client, callback_query):
     user_id = int(callback_query.matches[0].group(1))
     additional_days = int(callback_query.matches[0].group(2))
@@ -253,7 +253,7 @@ async def update_pro_callback(client: Client, callback_query):
     )
 
 
-@app.on_message(filters.command("rmpro") & SUDOERS)
+@app.on_message(filters.command("rmpro") & filters.user(OWNER_ID))
 async def rmpro_handler(client: Client, message: Message):
     if not message.reply_to_message and len(message.command) < 2:
         return await message.reply_text("Provide a user ID or reply to a message to remove the user from pro.")
@@ -270,7 +270,7 @@ async def rmpro_handler(client: Client, message: Message):
     await remove_pro_user(user.id)
     return await message.reply_text(f"{user.mention} has been removed from pro status.")
 
-@app.on_message(filters.command("prolists") & SUDOERS)
+@app.on_message(filters.command("prolists") & filters.user(OWNER_ID))
 async def prolists_handler(client: Client, message: Message):
     pro_users = await pros.find().to_list(length=None)  
     if not pro_users:
