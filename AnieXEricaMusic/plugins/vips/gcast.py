@@ -47,9 +47,7 @@ async def log_pro_broadcast_usage(user_id):
     if user_data:
         last_broadcast = user_data.get('last_broadcast', current_time)
         broadcast_count = user_data.get('broadcast_count', 0)
-        if current_time - last_broadcast >= timedelta(minutes=1):
-        #if current_time - last_broadcast >= timedelta(days=1):
-            # Reset the count if a day has passed
+        if current_time - last_broadcast >= timedelta(hours=5):
             await protimes.update_one(
                 {"user_id": user_id},
                 {
@@ -65,16 +63,17 @@ async def log_pro_broadcast_usage(user_id):
                     "$set": {"last_broadcast": current_time}
                 }
             )
-            return True  
+            return True
         else:
-            return False  
+            time_until_next_broadcast = (last_broadcast + timedelta(hours=5)) - current_time
+            return False, time_until_next_broadcast  
     else:
         await protimes.insert_one({
             "user_id": user_id,
             "broadcast_count": 1,
             "last_broadcast": current_time
         })
-        return True
+        return True 
         
 @app.on_message(filters.command("gcast"))
 async def broadcast(client: Client, message: Message):
@@ -85,9 +84,18 @@ async def broadcast(client: Client, message: Message):
         return await message.reply_text(f"{user.mention}, you don't have pro access for paid broadcast.")
     if IS_BROADCASTING:
         return await message.reply_text("A broadcast is already in progress. Please wait until it finishes.")
+    broadcast_result = await log_pro_broadcast_usage(user.id)
     can_broadcast = await log_pro_broadcast_usage(user.id)
+    if isinstance(broadcast_result, tuple):
+        can_broadcast, remaining_time = broadcast_result
+        hours, remainder = divmod(remaining_time.total_seconds(), 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return await message.reply_text(
+            f"{user.mention}, you have already used the /gcast command.\n"
+            f"It only works 1 times in a 5-hour period. Try again after {int(hours)} hours and {int(minutes)} minutes."
+            )
     if not can_broadcast:
-        return await message.reply_text(f"{user.mention} can only use /gcast 2 times in a 24-hour period. Your daily broadcasts are finished. Try again tomorrow.")
+        return await message.reply_text(f"{user.mention} can only use /gcast 2 times in a 3-hour period. Your daily broadcasts are finished. Try again tomorrow.")
     if "-wfchat" in message.text or "-wfuser" in message.text:
         if not message.reply_to_message or not (message.reply_to_message.photo or message.reply_to_message.text):
             return await message.reply_text("Please reply to a text or image message for broadcasting.")
