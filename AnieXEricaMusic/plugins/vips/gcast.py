@@ -73,13 +73,39 @@ async def addpro_handler(client: Client, message: Message):
         except ValueError:
             return await message.reply_text("Invalid duration. Please provide the number of days.")
     else:
-        duration = 1 
-    
+        duration = 1
     is_pro_user = await is_pro(user.id)
     if is_pro_user:
-        return await message.reply_text(f"{user.mention} is already a pro user.")
-    await add_pro_user(user.id, duration, message.from_user.id) 
+        ask_update = await message.reply_text(
+            f"{user.mention} is already a pro user. Do you want to update the expiration and add more days?",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Yes", callback_data=f"update_pro:{user.id}:{duration}")],
+                [InlineKeyboardButton("No", callback_data="cancel_update")]
+            ])
+        )
+        return
+    await add_pro_user(user.id, duration, message.from_user.id)
     return await message.reply_text(f"{user.mention} has been added to pro for {duration} days.")
+
+@app.on_callback_query(filters.regex(r"update_pro:(\d+):(\d+)") & SUDOERS)
+async def update_pro_callback(client: Client, callback_query):
+    user_id = int(callback_query.matches[0].group(1))
+    additional_days = int(callback_query.matches[0].group(2))
+    user_data = await pros.find_one({'user_id': user_id})
+    if not user_data:
+        return await callback_query.message.edit_text("Could not find the pro user.")
+    current_expiration = user_data.get('expires', datetime.now())
+    if isinstance(current_expiration, datetime):
+        new_expiration = current_expiration + timedelta(days=additional_days)
+    else:
+        new_expiration = datetime.now() + timedelta(days=additional_days)
+    await pros.update_one(
+        {'user_id': user_id},
+        {'$set': {'expires': new_expiration}}
+    )
+    await callback_query.message.edit_text(
+        f"Pro status for user ID {user_id} has been updated. New expiration: {new_expiration.strftime('%Y-%m-%d %H:%M:%S')}."
+    )
 
 
 @app.on_message(filters.command("rmpro") & SUDOERS)
@@ -118,16 +144,17 @@ async def prolists_handler(client: Client, message: Message):
             user = await app.get_users(user_id)
             added_by_user = await app.get_users(added_by)
             pro_list_text += (
-                f"• [{user.first_name}](tg://user?id={user_id}) (ID: {user_id})\n"
-                f"  - Expires: {expires}\n"
-                f"  - Added on: {added_time}\n"
-                f"  - Added by: [{added_by_user.first_name}](tg://user?id={added_by})\n\n"
+                f"{user.mention}\n"
+                f"ID: <code>{user_id}</code>\n"
+                f"Expires • <code>{expires}</code>\n"
+                f"Added on • <code>{added_time}</code>\n"
+                f"Added by • {added_by_user.mention}\n\n"
             )
         except Exception:
             pro_list_text += (
-                f"• User ID: {user_id}\n"
-                f"  - Expires: {expires}\n"
-                f"  - Added on: {added_time}\n"
-                f"  - Added by: {added_by}\n\n"
+                f"User ID • {user_id}\n"
+                f"Expires • {expires}\n"
+                f"Added on • {added_time}\n"
+                f"Added by • {added_by}\n\n"
             )
     await message.reply_text(pro_list_text, disable_web_page_preview=True)
