@@ -18,7 +18,12 @@ from AnieXEricaMusic.utils.database import (
     get_served_chats,
     get_served_users,
 )
-
+from pyrogram.types import (
+    CallbackQuery,
+    InlineKeyboardButton,
+    InlineKeyboardMarkup,
+    Message,
+)
 pros = mongodb.pro
 
 
