@@ -101,12 +101,12 @@ async def rmpro_handler(client: Client, message: Message):
 
 @app.on_message(filters.command("prolists") & SUDOERS)
 async def prolists_handler(client: Client, message: Message):
-    pro_users = pros.find()  
-    if not await pro_users.to_list(length=1):
+    pro_users = await pros.find().to_list(length=None)  
+    if not pro_users:
         return await message.reply_text("No users have pro status.")
     pro_list_text = "Pro Users List:\n\n"
-    async for pro_user in pro_users:
-        user_id = pro_user['user_id']
+    for pro_user in pro_users:
+        user_id = pro_user.get('user_id')
         expires = pro_user.get('expires', 'Unknown')
         added_time = pro_user.get('added_time', 'Unknown')
         added_by = pro_user.get('added_by', 'Unknown')
@@ -117,14 +117,17 @@ async def prolists_handler(client: Client, message: Message):
         try:
             user = await app.get_users(user_id)
             added_by_user = await app.get_users(added_by)
-            pro_list_text += f"• [{user.first_name}](tg://user?id={user_id}) (ID: {user_id})\n"
-            pro_list_text += f"  - Expires: {expires}\n"
-            pro_list_text += f"  - Added on: {added_time}\n"
-            pro_list_text += f"  - Added by: [{added_by_user.first_name}](tg://user?id={added_by})\n\n"
+            pro_list_text += (
+                f"• [{user.first_name}](tg://user?id={user_id}) (ID: {user_id})\n"
+                f"  - Expires: {expires}\n"
+                f"  - Added on: {added_time}\n"
+                f"  - Added by: [{added_by_user.first_name}](tg://user?id={added_by})\n\n"
+            )
         except Exception:
-            pro_list_text += f"• User ID: {user_id}\n"
-            pro_list_text += f"  - Expires: {expires}\n"
-            pro_list_text += f"  - Added on: {added_time}\n"
-            pro_list_text += f"  - Added by: {added_by}\n\n"
-    
+            pro_list_text += (
+                f"• User ID: {user_id}\n"
+                f"  - Expires: {expires}\n"
+                f"  - Added on: {added_time}\n"
+                f"  - Added by: {added_by}\n\n"
+            )
     await message.reply_text(pro_list_text, disable_web_page_preview=True)
