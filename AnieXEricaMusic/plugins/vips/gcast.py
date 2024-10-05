@@ -38,9 +38,42 @@ from AnieXEricaMusic.utils.decorators.language import language
 from AnieXEricaMusic.utils.formatters import alpha_to_int
 
 pros = mongodb.pro
-
+protimes = mongodb.protime
 IS_BROADCASTING = False
 
+async def log_pro_broadcast_usage(user_id):
+    current_time = datetime.utcnow()
+    user_data = await protimes.find_one({"user_id": user_id})
+    if user_data:
+        last_broadcast = user_data.get('last_broadcast', current_time)
+        broadcast_count = user_data.get('broadcast_count', 0)
+        if current_time - last_broadcast >= timedelta(days=1):
+            await protimes.update_one(
+                {"user_id": user_id},
+                {
+                    "$set": {"broadcast_count": 1, "last_broadcast": current_time}
+                }
+            )
+            return True 
+        elif broadcast_count < 2:
+            await protimes.update_one(
+                {"user_id": user_id},
+                {
+                    "$inc": {"broadcast_count": 1},
+                    "$set": {"last_broadcast": current_time}
+                }
+            )
+            return True  
+        else:
+            return False  
+    else:
+        await protimes.insert_one({
+            "user_id": user_id,
+            "broadcast_count": 1,
+            "last_broadcast": current_time
+        })
+        return True  
+        
 @app.on_message(filters.command("gcast"))
 async def broadcast(client: Client, message: Message):
     global IS_BROADCASTING
@@ -50,6 +83,9 @@ async def broadcast(client: Client, message: Message):
         return await message.reply_text(f"{user.mention}, you don't have pro access for paid broadcast.")
     if IS_BROADCASTING:
         return await message.reply_text("A broadcast is already in progress. Please wait until it finishes.")
+    can_broadcast = await log_pro_broadcast_usage(user.id)
+    if not can_broadcast:
+        return await message.reply_text("You can only use /gcast 2 times in a 24-hour period.")
     if "-wfchat" in message.text or "-wfuser" in message.text:
         if not message.reply_to_message or not (message.reply_to_message.photo or message.reply_to_message.text):
             return await message.reply_text("Please reply to a text or image message for broadcasting.")
@@ -96,6 +132,7 @@ async def broadcast(client: Client, message: Message):
                     continue
             await message.reply_text(f"Broadcast to users completed! Sent to {sent_users} users.")
         IS_BROADCASTING = False
+        await log_pro_broadcast_usage(user.id)
         return
     if len(message.command) < 2:
         return await message.reply_text("Please provide a message to broadcast or reply to a message.")
@@ -115,7 +152,7 @@ async def broadcast(client: Client, message: Message):
             continue
     await message.reply_text(f"Text broadcast completed! Sent to {sent_chats} chats.")
     IS_BROADCASTING = False
-    
+    await log_pro_broadcast_usage(user.id)
     
 async def add_pro_user(user_id: int, duration: int, added_by: int):
     expiration_date = datetime.now() + timedelta(days=duration)
