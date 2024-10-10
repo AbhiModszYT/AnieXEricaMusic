@@ -18,6 +18,7 @@ from AnieXEricaMusic.utils.database import (
 from AnieXEricaMusic.utils.decorators.language import language
 from AnieXEricaMusic.utils.extraction import extract_user
 from config import BANNED_USERS
+from AnieXEricaMusic.utils.database import get_served_chats, get_served_users, get_sudoers,is_autoend,is_autoleave
 
 
 @app.on_message(filters.command(["gban", "globalban"]) & SUDOERS)
@@ -38,6 +39,7 @@ async def global_ban(client, message: Message, _):
         return await message.reply_text(_["gban_4"].format(user.mention))
     if user.id not in BANNED_USERS:
         BANNED_USERS.add(user.id)
+    bans = len(await get_served_chats())
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
@@ -62,7 +64,7 @@ async def global_ban(client, message: Message, _):
             user.mention,
             user.id,
             message.from_user.mention,
-            number_of_chats,
+            bans,
         )
     )
     await mystic.delete()
@@ -80,6 +82,7 @@ async def global_un(client, message: Message, _):
         return await message.reply_text(_["gban_7"].format(user.mention))
     if user.id in BANNED_USERS:
         BANNED_USERS.remove(user.id)
+    bans = len(await get_served_chats())
     served_chats = []
     chats = await get_served_chats()
     for chat in chats:
@@ -96,7 +99,7 @@ async def global_un(client, message: Message, _):
         except:
             continue
     await remove_banned_user(user.id)
-    await message.reply_text(_["gban_9"].format(user.mention, number_of_chats))
+    await message.reply_text(_["gban_9"].format(user.mention, bans))
     await mystic.delete()
 
 
