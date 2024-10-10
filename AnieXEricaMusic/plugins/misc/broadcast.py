@@ -16,6 +16,7 @@ from AnieXEricaMusic.utils.database import (
 from AnieXEricaMusic.utils.decorators.language import language
 from AnieXEricaMusic.utils.formatters import alpha_to_int
 from config import adminlist
+from AnieXEricaMusic.utils.database import get_served_chats, get_served_users, get_sudoers,is_autoend,is_autoleave
 
 IS_BROADCASTING = False
 
@@ -28,8 +29,6 @@ async def braodcast_message(client, message, _):
     if "-wfchat" in message.text or "-wfuser" in message.text:
         if not message.reply_to_message or not (message.reply_to_message.photo or message.reply_to_message.text):
             return await message.reply_text("Please reply to a text or image message for broadcasting.")
-
-        # Extract data from the replied message
         if message.reply_to_message.photo:
             content_type = 'photo'
             file_id = message.reply_to_message.photo.file_id
@@ -44,8 +43,8 @@ async def braodcast_message(client, message, _):
         await message.reply_text(_["broad_1"])
 
         if "-wfchat" in message.text or "-wfuser" in message.text:
-            # Broadcasting to chats
             sent_chats = 0
+            chatsal = len(await get_served_chats())
             chats = [int(chat["chat_id"]) for chat in await get_served_chats()]
             for i in chats:
                 try:
@@ -59,11 +58,11 @@ async def braodcast_message(client, message, _):
                     await asyncio.sleep(fw.x)
                 except:
                     continue
-            await message.reply_text(f"Broadcast to chats completed! Sent to {sent_chats} chats.")
+            await message.reply_text(f"Broadcast to chats completed! Sent to {chatsal} chats.")
 
         if "-wfuser" in message.text:
-            # Broadcasting to users
             sent_users = 0
+            use = len(await get_served_users())
             users = [int(user["user_id"]) for user in await get_served_users()]
             for i in users:
                 try:
@@ -77,7 +76,7 @@ async def braodcast_message(client, message, _):
                     await asyncio.sleep(fw.x)
                 except:
                     continue
-            await message.reply_text(f"Broadcast to users completed! Sent to {sent_users} users.")
+            await message.reply_text(f"Broadcast to users completed! Sent to {use} users.")
 
         IS_BROADCASTING = False
         return
@@ -112,6 +111,7 @@ async def braodcast_message(client, message, _):
         sent = 0
         pin = 0
         chats = []
+        chata = len(await get_served_chats())
         schats = await get_served_chats()
         for chat in schats:
             chats.append(int(chat["chat_id"]))
@@ -144,13 +144,14 @@ async def braodcast_message(client, message, _):
             except:
                 continue
         try:
-            await message.reply_text(_["broad_3"].format(sent, pin))
+            await message.reply_text(_["broad_3"].format(chata, pin))
         except:
             pass
 
     if "-user" in message.text:
         susr = 0
         served_users = []
+        usa = len(await get_served_users())
         susers = await get_served_users()
         for user in susers:
             served_users.append(int(user["user_id"]))
@@ -171,7 +172,7 @@ async def braodcast_message(client, message, _):
             except:
                 pass
         try:
-            await message.reply_text(_["broad_4"].format(susr))
+            await message.reply_text(_["broad_4"].format(usa))
         except:
             pass
 
