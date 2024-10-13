@@ -28,3 +28,4 @@ youtube-search
 youtube-search-python
 pyromod
 wget
+blackpink
