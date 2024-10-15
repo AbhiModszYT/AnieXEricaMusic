@@ -1,3 +1,13 @@
+from pyrogram import Client
+
+import config
+
+from ..logging import LOGGER
+
+assistants = []
+assistantids = []
+AMBOT = 7045191057
+
 class Userbot(Client):
     def __init__(self):
         self.one = Client(
