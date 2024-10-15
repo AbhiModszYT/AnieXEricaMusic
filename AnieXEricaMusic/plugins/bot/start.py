@@ -21,7 +21,7 @@ from AnieXEricaMusic.utils.formatters import get_readable_time
 from AnieXEricaMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
-
+from AnieXEricaMusic.misc import SUDOERS
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -136,6 +136,18 @@ async def welcome(client, message: Message):
                     )
                     return await app.leave_chat(message.chat.id)
 
+                if member.id in SUDOERS:
+                    return await message.reply_text(
+                        _["welcome_1"].format(
+                            app.mention, member.mention, message.chat.title, app.username, member.mention
+                            )
+                    )
+                if member.id in config.OWNER_ID:
+                    return await message.reply_text(
+                        _["welcome_2"].format(
+                            app.mention, member.mention, message.chat.title, app.username, member.mention
+                            )
+                    )
                 out = start_panel(_)
                 await message.reply_photo(
                     photo=config.START_IMG_URL,
