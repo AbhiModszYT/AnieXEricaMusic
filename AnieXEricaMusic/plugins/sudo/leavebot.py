@@ -14,10 +14,10 @@ async def leave(_, message):
         chat_id = int(message.command[1])
     except ValueError:
         return await message.reply_text(f"Invalid chat ID. Please enter a numeric ID.")
-    SKY = await message.reply_text(f"Leaving chat... {ECOMUSIC.me.mention}")
+    SKY = await message.reply_text(f"Leaving chat... {app.me.mention}")
     try:
-        await app.send_message(chat_id, f"{ECOMUSIC.me.mention} Lefting chat Bye...")
+        await app.send_message(chat_id, f"{app.me.mention} Lefting chat Bye...")
         await app.leave_chat(chat_id)
-        await SKY.edit(f"{ECOMUSIC.me.mention} Left chat {chat_id}.")
+        await SKY.edit(f"{app.me.mention} Left chat {chat_id}.")
     except Exception as e:
         pass
