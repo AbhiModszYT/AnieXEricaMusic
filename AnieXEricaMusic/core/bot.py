@@ -1,7 +1,6 @@
 import uvloop
 
 uvloop.install()
-from pyromod import listen
 from pyrogram import Client, errors
 from pyrogram.enums import ChatMemberStatus, ParseMode
 
