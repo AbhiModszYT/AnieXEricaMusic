@@ -112,6 +112,9 @@ async def banall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -130,6 +133,9 @@ async def handle_callback(client: Client, callback_query: CallbackQuery):
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -162,6 +168,9 @@ async def unbanall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -179,6 +188,9 @@ async def handle_unbanall_callback(client: Client, callback_query: CallbackQuery
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -211,6 +223,9 @@ async def unmuteall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -229,6 +244,9 @@ async def handle_unmuteall_callback(client: Client, callback_query: CallbackQuer
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -272,6 +290,9 @@ async def muteall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -288,6 +309,9 @@ async def handle_muteall_callback(client: Client, callback_query: CallbackQuery)
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -319,6 +343,9 @@ async def kickall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -336,6 +363,9 @@ async def handle_kickall_callback(client: Client, callback_query: CallbackQuery)
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -368,6 +398,9 @@ async def unpinall(client: Client, message: Message):
     chat_id = message.chat.id
     user_id = message.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
@@ -385,6 +418,9 @@ async def handle_unpinall_callback(client: Client, callback_query: CallbackQuery
     chat_id = callback_query.message.chat.id
     user_id = callback_query.from_user.id
     owner_id = None
+    assistant = await get_assistant(chat_id)
+    ass = await assistant.get_me()
+    assid = ass.id
     async for admin in client.get_chat_members(chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
         if admin.status == enums.ChatMemberStatus.OWNER:
             owner_id = admin.user.id
