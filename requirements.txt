@@ -23,7 +23,7 @@ spotipy
 tgcrypto
 unidecode
 uvloop
-yt-dlp
+yt-dlp>=2025.01.01
 youtube-search
 youtube-search-python
 httpx[http2]==0.27.2
